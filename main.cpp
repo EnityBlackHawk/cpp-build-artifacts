@@ -1,4 +1,4 @@
-#include "lib.h"
+#include "foo/lib.h"
 #include <execinfo.h>
 #include <signal.h>
 #include <unistd.h>
