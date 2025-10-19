@@ -1,0 +1,10 @@
+CompileFlags:
+  Add: [-std=gnu++23]
+
+# Alternative: if you prefer strict ISO C++23 without GNU extensions, use:
+# CompileFlags:
+#   Add: [-std=c++23]
+
+# You can also add other flags here, e.g. include paths:
+# CompileFlags:
+#   Add: [-I, include, -DDEBUG]
