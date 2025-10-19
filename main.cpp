@@ -9,6 +9,24 @@
 
 
 void printStackTrace(int skip = 0) {
+
+    FILE *f = fopen("/proc/self/maps", "r");
+    if (!f) return;
+
+    char line[512];
+    while (fgets(line, sizeof(line), f)) {
+        if (strstr(line, "libFoo.so")) {
+            unsigned long start, end;
+            char perms[5], dev[6], mapname[256];
+            int inode;
+            sscanf(line, "%lx-%lx %4s %*x %5s %d %s",
+                   &start, &end, perms, dev, &inode, mapname);
+            printf("libFoo.so loaded at 0x%lx - 0x%lx\n", start, end);
+        }
+    }
+    fclose(f);
+
+
     void* callstack[128];
     int frames = backtrace(callstack, 128);
     char** symbols = backtrace_symbols(callstack, frames);
