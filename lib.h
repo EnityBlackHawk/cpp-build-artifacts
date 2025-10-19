@@ -22,19 +22,9 @@ public:
 private:
 
 #if __cplusplus >= 202302L
-  void printWithFmt(const std::string &value) {
-    std::println("{}", value);
-    crash();
-  }
+  void printWithFmt(const std::string &value);
 #else
-  void printWithCout(const std::string &value) {
-    std::cout << value << std::endl;
-    crash();
-  }
+  void printWithCout(const std::string &value);
 #endif
-  void crash() {
-    int* x = nullptr;
-    *x = 10;
-  }
-
+  void crash();
 };
