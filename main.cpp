@@ -1,6 +1,7 @@
 #include "lib.h"
 #include <execinfo.h>
 #include <signal.h>
+#include <thread>
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -42,7 +43,7 @@ void printStackTrace(int skip = 0) {
 
 void signalHandler(int sig, siginfo_t *si, void *unused) {
     std::cerr << "Caught signal " << sig << " (Segmentation Fault)\n";
-    printStackTrace(2); // pula os 2 primeiros frames: signalHandler + printStackTrace
+    printStackTrace(3); // pula os 2 primeiros frames: signalHandler + printStackTrace
     _Exit(1);
 }
 int main() {
@@ -57,6 +58,10 @@ int main() {
     sigaction(SIGILL, &sa, NULL);
 
     Foo foo;
-    foo.print(std::string("Teste"));
+    std::thread t( [&foo]{
+        foo.print(std::string("Teste"));
+    } );
+
+    t.join();
 
 }
